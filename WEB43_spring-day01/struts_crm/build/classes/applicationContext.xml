@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+
+	
+	<!-- 配置Dao -->
+	<bean name="customerDao" class="cn.itheima.dao.impl.CustomerDaoImpl" ></bean>
+	<bean name="linkManDao" class="cn.itheima.dao.impl.LinkManDaoImpl" ></bean>
+	<bean name="userDao" class="cn.itheima.dao.impl.UserDaoImpl" ></bean>
+	<!-- 配置Service -->
+	<bean name="customerService" class="cn.itheima.service.impl.CustomerServiceImpl" >
+		<property name="customerDao" ref="customerDao" ></property>
+	</bean>
+	<bean name="linkManService" class="cn.itheima.service.impl.LinkManServiceImpl" >
+		<property name="cd" ref="customerDao" ></property>
+		<property name="lmd" ref="linkManDao" ></property>
+	</bean>
+	<bean name="userService" class="cn.itheima.service.impl.UserServiceImpl" >
+		<property name="ud" ref="userDao" ></property>
+	</bean>
+	
+
+</beans>
