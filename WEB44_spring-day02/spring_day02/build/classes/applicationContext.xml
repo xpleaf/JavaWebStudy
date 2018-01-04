@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd ">
+
+<!-- 指定扫描cn.itcast.bean报下的所有类中的注解.
+	 注意:扫描包时.会扫描指定报下的所有子孙包
+ -->
+<context:component-scan base-package="cn.itcast.bean"></context:component-scan>
+
+<bean name="car2" class="cn.itcast.bean.Car"  >
+	<property name="name" value="布加迪威龙" ></property>
+	<property name="color" value="black"  ></property>
+</bean>
+</beans>
