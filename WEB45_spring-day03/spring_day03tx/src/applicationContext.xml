@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+
+<!-- 指定spring读取db.properties配置 -->
+<context:property-placeholder location="classpath:db.properties"  />
+
+<!-- 事务核心管理器,封装了所有事务操作. 依赖于连接池 -->
+<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+	<property name="dataSource" ref="dataSource" ></property>
+</bean>
+<!-- 事务模板对象 -->
+<bean name="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate" >
+	<property name="transactionManager" ref="transactionManager" ></property>
+</bean>
+
+<!-- 配置事务通知 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager" >
+	<tx:attributes>
+		<!-- 以方法为单位,指定方法应用什么事务属性
+			isolation:隔离级别
+			propagation:传播行为
+			read-only:是否只读
+		 -->
+		<tx:method name="save*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+		<tx:method name="persist*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+		<tx:method name="update*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+		<tx:method name="modify*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+		<tx:method name="delete*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+		<tx:method name="remove*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+		<tx:method name="get*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true" />
+		<tx:method name="find*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true" />
+		<tx:method name="transfer" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false" />
+	</tx:attributes>
+</tx:advice>
+
+
+<!-- 配置织入 -->
+<aop:config  >
+	<!-- 配置切点表达式 -->
+	<aop:pointcut expression="execution(* cn.itcast.service.*ServiceImpl.*(..))" id="txPc"/>
+	<!-- 配置切面 : 通知+切点
+		 	advice-ref:通知的名称
+		 	pointcut-ref:切点的名称
+	 -->
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="txPc" />
+</aop:config>
+
+
+<!-- 1.将连接池 -->
+<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+	<property name="jdbcUrl" value="${jdbc.jdbcUrl}" ></property>
+	<property name="driverClass" value="${jdbc.driverClass}" ></property>
+	<property name="user" value="${jdbc.user}" ></property>
+	<property name="password" value="${jdbc.password}" ></property>
+</bean>
+
+
+
+<!-- 2.Dao-->
+<bean name="accountDao" class="cn.itcast.dao.AccountDaoImpl" >
+	<property name="dataSource" ref="dataSource" ></property>
+</bean>
+<!-- 3.Service-->
+<bean name="accountService" class="cn.itcast.service.AccountServiceImpl" >
+	<property name="ad" ref="accountDao" ></property>
+	<property name="tt" ref="transactionTemplate" ></property>
+</bean>  
+
+</beans>
