@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.crm.mapper.CustomerMapper">
+	<sql id="customerQueryVo">
+		<where>
+			<if test="custName != null and custName != ''">
+				AND a.cust_name LIKE '%${custName}%'
+			</if>
+			<if test="custSource != null and custSource != ''">
+				AND a.cust_source = #{custSource}
+			</if>
+			<if test="custIndustry != null and custIndustry != ''">
+				AND a.cust_industry = #{custIndustry}
+			</if>
+			<if test="custLevel != null and custLevel != ''">
+				AND a.cust_level = #{custLevel}
+			</if>
+		</where>
+	</sql>
+
+	<!-- 根据 queryVo 分页查询数据 -->
+	<select id="queryCustomerByQueryVo" parameterType="cn.itcast.crm.pojo.QueryVo"
+		resultType="cn.itcast.crm.pojo.Customer">
+		SELECT
+		a.cust_id,
+		a.cust_name,
+		a.cust_user_id,
+		a.cust_create_id,
+		b.dict_item_name cust_source,
+		c.dict_item_name cust_industry,
+		d.dict_item_name cust_level,
+		a.cust_linkman,
+		a.cust_phone,
+		a.cust_mobile,
+		a.cust_zipcode,
+		a.cust_address,
+		a.cust_createtime
+		FROM
+		customer a
+		LEFT JOIN base_dict b ON a.cust_source
+		= b.dict_id
+		LEFT JOIN
+		base_dict c ON a.cust_industry = c.dict_id
+		LEFT JOIN base_dict d ON
+		a.cust_level = d.dict_id
+		<include refid="customerQueryVo" />
+		<if test="start != null">
+			LIMIT #{start}, #{rows}
+		</if>
+	</select>
+
+	<!-- 根据 queryVo 查询数据条数 -->
+	<select id="queryCountByQueryVo" parameterType="cn.itcast.crm.pojo.QueryVo"
+		resultType="int">
+		SELECT count(1) FROM customer a
+		<include refid="customerQueryVo" />
+	</select>
+
+	<!-- 根据 id 查询用户 -->
+	<select id="queryCustomerById" resultType="cn.itcast.crm.pojo.Customer">
+		SELECT * FROM customer
+		WHERE cust_id = #{id}
+	</select>
+
+	<!-- 根据id编辑客户 -->
+	<select id="updateCustomerById" parameterType="cn.itcast.crm.pojo.Customer">
+		UPDATE `customer`
+		SET
+		<if test="cust_name !=null and cust_name != ''">
+			`cust_name` = #{cust_name},
+		</if>
+		<if test="cust_user_id !=null">
+			`cust_user_id` = #{cust_user_id},
+		</if>
+		<if test="cust_create_id !=null">
+			`cust_create_id` = #{cust_create_id},
+		</if>
+		<if test="cust_source !=null and cust_source != ''">
+			`cust_source` = #{cust_source},
+		</if>
+		<if test="cust_industry !=null and cust_industry != ''">
+			`cust_industry` = #{cust_industry},
+		</if>
+		<if test="cust_level !=null and cust_level != ''">
+			`cust_level` = #{cust_level},
+		</if>
+		<if test="cust_linkman !=null and cust_linkman != ''">
+			`cust_linkman` = #{cust_linkman},
+		</if>
+		<if test="cust_phone !=null and cust_phone != ''">
+			`cust_phone` = #{cust_phone},
+		</if>
+		<if test="cust_mobile !=null and cust_mobile != ''">
+			`cust_mobile` = #{cust_mobile},
+		</if>
+		<if test="cust_zipcode !=null and cust_zipcode != ''">
+			`cust_zipcode` = #{cust_zipcode},
+		</if>
+		<if test="cust_address !=null and cust_address != ''">
+			`cust_address` = #{cust_address},
+		</if>
+		`cust_createtime` = NOW() WHERE
+		(`cust_id` = #{cust_id});
+	</select>
+
+	<!-- 根据 id 删除客户 -->
+	<delete id="deleteCustomerById" parameterType="long">
+		DELETE FROM
+		customer WHERE cust_id = #{id}
+	</delete>
+</mapper>

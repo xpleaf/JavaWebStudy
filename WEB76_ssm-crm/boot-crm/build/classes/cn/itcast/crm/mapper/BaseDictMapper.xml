@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.crm.mapper.BaseDictMapper">
+	<!-- 根据类别代码查询数据 -->
+	<select id="queryBaseDictByDictTypeCode" parameterType="String"
+		resultType="cn.itcast.crm.pojo.BaseDict"> 
+		SELECT * FROM base_dict WHERE dict_type_code =
+		#{dict_type_code}
+	</select>
+</mapper>
