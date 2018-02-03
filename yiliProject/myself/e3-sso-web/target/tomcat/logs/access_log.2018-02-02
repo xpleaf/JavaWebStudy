@@ -1,0 +1,8 @@
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:23 +0800] "GET /page/login?redirect=http://localhost:8092/order/order-cart.html HTTP/1.1" 200 10172 http-bio-8088-exec-3 866
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:23 +0800] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-8088-exec-9 3
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:35 +0800] "POST /user/login HTTP/1.1" 200 70 http-bio-8088-exec-10 375
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:37 +0800] "GET /images/productinfo.png HTTP/1.1" 404 949 http-bio-8088-exec-10 6
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:43 +0800] "POST /user/login HTTP/1.1" 200 82 http-bio-8088-exec-10 41
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:15:35:32 +0800] "GET /page/login?redirect=http://localhost:8092/order/order-cart.html HTTP/1.1" 200 10172 http-bio-8088-exec-9 135
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:15:35:36 +0800] "POST /user/login HTTP/1.1" 200 82 http-bio-8088-exec-9 100
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:15:35:37 +0800] "GET /images/productinfo.png HTTP/1.1" 404 949 http-bio-8088-exec-9 11

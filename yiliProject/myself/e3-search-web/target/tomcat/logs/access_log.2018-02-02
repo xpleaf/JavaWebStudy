@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:12:03:04 +0800] "GET /search.html?keyword=iphone+x HTTP/1.1" 200 32210 http-bio-8085-exec-1 6486
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:12:03:06 +0800] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8085-exec-2 10
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:09 +0800] "GET /search.html?keyword=p9 HTTP/1.1" 200 32158 http-bio-8085-exec-4 342
+0:0:0:0:0:0:0:1 - - [02/Feb/2018:13:07:10 +0800] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8085-exec-5 2

@@ -1,0 +1,4 @@
+# 缓存中数据key的前缀
+REIDS_ITEM_PRE=ITEM_INFO
+# 缓存数据超时时间
+ITEM_CACHE_EXPIRE=3600
